@@ -1,0 +1,40 @@
+.fav-loc {
+  width: 100%;
+  flex-wrap: wrap;
+}
+.fav-loc-title {
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0;
+  align-items: center;
+  justify-content: space-between;
+}
+.fav-loc-box {
+  width: 100%;
+  height: 75px;
+  margin: 5px auto;
+  background-color: var(--tertiary-dark);
+  padding: 15px;
+  border-radius: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 3fr;
+}
+.fav-loc-weather-value p {
+  margin-left: 10px;
+  border-left: 2px solid var(--font-color);
+  padding-left: 15px;
+}
+.fav-loc-humidity,
+.fav-loc-windspeed,
+.fav-loc-info {
+  align-items: end;
+}
+
+@media screen and (max-width: 640px) {
+  .fav-loc-box {
+    grid-template-columns: 1fr 2fr 6fr;
+  }
+  .fav-loc-location {
+    font-size: 12px;
+  }
+}

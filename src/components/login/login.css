@@ -1,0 +1,29 @@
+.profile {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 50px;
+}
+.btn {
+  padding: 5px 15px;
+  height: 35px;
+  background-color: var(--quaternary-dark);
+  color: var(--font-color);
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+}
+.profile-pic {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  box-shadow: 4px 4px 25px #2d4995;
+}
+
+@media screen and (max-width: 640px) {
+  .profile {
+    margin-left: 5px;
+    gap: 20px;
+  }
+}
