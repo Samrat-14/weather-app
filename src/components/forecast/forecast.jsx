@@ -1,6 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
-import { sun } from '../../assets/index.js';
 import './forecast.css';
 
 const WEEK_DAYS = [
@@ -13,7 +13,8 @@ const WEEK_DAYS = [
   'Sunday',
 ];
 
-const Forecast = ({ data }) => {
+const Forecast = () => {
+  const data = useSelector((state) => state.searchData)?.forecastData;
   const dayInAWeek = new Date().getDay();
   const forecastDays = WEEK_DAYS.slice(dayInAWeek, WEEK_DAYS.length).concat(
     WEEK_DAYS.slice(0, dayInAWeek)

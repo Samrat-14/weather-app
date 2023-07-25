@@ -21,7 +21,7 @@
   box-shadow: 4px 4px 25px #2d4995;
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 900px) {
   .profile {
     margin-left: 5px;
     gap: 20px;

@@ -29,7 +29,7 @@
   line-height: 0.8;
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 900px) {
   .current-weather {
     width: 100%;
     flex-direction: row;

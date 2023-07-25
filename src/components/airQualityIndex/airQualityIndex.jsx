@@ -1,5 +1,6 @@
 import React from 'react';
 import useIsMobile from '../../utils/useIsMobile';
+import { useSelector } from 'react-redux';
 
 import { location, windspeed } from '../../assets/index.js';
 import './airQualityIndex.css';
@@ -38,7 +39,8 @@ const AQI_INDEX = {
   },
 };
 
-const AirQualityIndex = ({ data }) => {
+const AirQualityIndex = () => {
+  const data = useSelector((state) => state.searchData)?.aqiData;
   const { isMobile } = useIsMobile();
   const qualityIndex = (sub, amt) => {
     switch (sub) {

@@ -30,7 +30,7 @@
   align-items: end;
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 900px) {
   .fav-loc-box {
     grid-template-columns: 1fr 2fr 6fr;
   }

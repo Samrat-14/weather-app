@@ -8,7 +8,7 @@
   color: #000;
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 900px) {
   .search-bar {
     width: 80%;
   }

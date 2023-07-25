@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Search from '../search/search';
 import { WEATHER_API_KEY, WEATHER_API_URL } from '../../api';
 import useIsMobile from '../../utils/useIsMobile';
@@ -15,6 +15,7 @@ import './weatherPanel.css';
 import AirQualityIndex from '../airQualityIndex/airQualityIndex';
 import CurrentWeather from '../currentWeather/currentWeather';
 import Forecast from '../forecast/forecast';
+import { useSelector } from 'react-redux';
 
 const WeatherPanel = ({
   favLocations,
@@ -23,58 +24,17 @@ const WeatherPanel = ({
   isAuth,
   setShowProfilePanel,
 }) => {
+  const searchResult = useSelector((state) => state.searchData);
+
   const { isMobile } = useIsMobile();
-  const [currentWeather, setCurrentWeather] = useState(null);
-  const [forecast, setForecast] = useState(null);
-  const [aqi, setAqi] = useState(null);
 
   const [tempUnit, setTempUnit] = useState('metric');
-
-  const handleOnSearchChange = (searchData) => {
-    if (!searchData) return;
-
-    const [lat, lon] = searchData.value.split(' ');
-
-    const currentWeatherFetch = fetch(
-      `${WEATHER_API_URL}/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=${tempUnit}`
-    );
-    const forecastFetch = fetch(
-      `${WEATHER_API_URL}/forecast?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=${tempUnit}`
-    );
-    const aqiFetch = fetch(
-      `${WEATHER_API_URL}/air_pollution?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}`
-    );
-
-    Promise.all([currentWeatherFetch, forecastFetch, aqiFetch])
-      .then(async (response) => {
-        const weatherResponse = await response[0].json();
-        const forecastResponse = await response[1].json();
-        const aqiResponse = await response[2].json();
-
-        setCurrentWeather({
-          city: searchData.label,
-          unit: tempUnit,
-          ...weatherResponse,
-        });
-        setForecast({
-          city: searchData.label,
-          unit: tempUnit,
-          ...forecastResponse,
-        });
-        setAqi({ city: searchData.label, ...aqiResponse });
-      })
-      .catch((err) => console.log(err));
-  };
-
-  // console.log(currentWeather);
-  // console.log(forecast);
-  // console.log(aqi);
 
   const handleFavourite = () => {
     const isFavourite = favLocations.find(
       (location) =>
-        location.coord.lat === currentWeather.coord.lat &&
-        location.coord.lon === currentWeather.coord.lon
+        location.coord.lat === searchResult.currentWeatherData.coord.lat &&
+        location.coord.lon === searchResult.currentWeatherData.coord.lon
     );
 
     if (!isFavourite) {
@@ -82,25 +42,25 @@ const WeatherPanel = ({
         ...favLocations,
         {
           coord: {
-            lat: currentWeather.coord.lat,
-            lon: currentWeather.coord.lon,
+            lat: searchResult.currentWeatherData.coord.lat,
+            lon: searchResult.currentWeatherData.coord.lon,
           },
-          city: currentWeather.city,
+          city: searchResult.currentWeatherData.city,
           weather: {
             temp: {
-              value: currentWeather.main.temp,
+              value: searchResult.currentWeatherData.main.temp,
               unit: tempUnit === 'metric' ? 'C' : 'F',
             },
-            hum: currentWeather.main.humidity,
-            wind: currentWeather.wind.speed,
+            hum: searchResult.currentWeatherData.main.humidity,
+            wind: searchResult.currentWeatherData.wind.speed,
           },
         },
       ]);
     } else {
       const newFav = favLocations.filter(
         (location) =>
-          location.coord.lat !== currentWeather.coord.lat ||
-          location.coord.lon !== currentWeather.coord.lon
+          location.coord.lat !== searchResult.currentWeatherData.coord.lat ||
+          location.coord.lon !== searchResult.currentWeatherData.coord.lon
       );
       setFavLocations(newFav);
     }
@@ -121,15 +81,11 @@ const WeatherPanel = ({
             <img src={appLogoMobile} alt="app-logo" height={40} width={40} />
           )}
         </div>
-        <Search
-          onSearchChange={handleOnSearchChange}
-          tempUnit={tempUnit}
-          favouriteToShow={favouriteToShow}
-        />
+        <Search tempUnit={tempUnit} favouriteToShow={favouriteToShow} />
       </div>
 
       <div className="weather-panel__info">
-        {currentWeather && (
+        {searchResult?.currentWeatherData && (
           <div className="location flex-row align-center">
             {!isMobile && (
               <img
@@ -143,12 +99,16 @@ const WeatherPanel = ({
                 width={30}
               />
             )}
-            <h4 className="location-place">{currentWeather.city}</h4>
+            <h4 className="location-place">
+              {searchResult.currentWeatherData.city}
+            </h4>
             {isAuth &&
               (favLocations.find(
                 (location) =>
-                  location.coord.lat === currentWeather.coord.lat &&
-                  location.coord.lon === currentWeather.coord.lon
+                  location.coord.lat ===
+                    searchResult.currentWeatherData.coord.lat &&
+                  location.coord.lon ===
+                    searchResult.currentWeatherData.coord.lon
               ) ? (
                 <img
                   src={favouriteFilled}
@@ -169,7 +129,7 @@ const WeatherPanel = ({
           </div>
         )}
         <div className="temp-toggle-wrapper toggle-wrapper flex-row align-center">
-          <p className="temp-toggle-text">Celsius ⇔ Farhrenheit</p>
+          <p className="temp-toggle-text">Celsius ⇔ Fahrenheit</p>
           <input
             type="checkbox"
             name="temp-toggle"
@@ -188,11 +148,11 @@ const WeatherPanel = ({
           isMobile ? 'weather-panel__flex-col' : 'weather-panel__flex-row'
         }`}
       >
-        <AirQualityIndex data={aqi} />
-        <CurrentWeather data={currentWeather} />
+        <AirQualityIndex />
+        <CurrentWeather />
       </div>
 
-      {forecast && <Forecast data={forecast} />}
+      {searchResult?.forecastData && <Forecast />}
     </div>
   );
 };
