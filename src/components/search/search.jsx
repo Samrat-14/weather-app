@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { AsyncPaginate } from 'react-select-async-paginate';
 import { GEO_API_URL, geoApiOptions } from '../../api';
+import { onSearchChange } from '../../redux/searchAction';
+import { useDispatch } from 'react-redux';
 
 import './search.css';
 
-const Search = ({ onSearchChange, tempUnit, favouriteToShow }) => {
+const Search = ({ tempUnit, favouriteToShow }) => {
   const [search, setSearch] = useState(null);
+  const dispatch = useDispatch();
 
   const loadOptions = async (inputValue) => {
     return fetch(
@@ -28,7 +31,7 @@ const Search = ({ onSearchChange, tempUnit, favouriteToShow }) => {
 
   const handleOnChange = (searchData) => {
     setSearch(searchData);
-    onSearchChange(searchData);
+    dispatch(onSearchChange({ ...searchData, tempUnit }));
   };
 
   useEffect(() => {

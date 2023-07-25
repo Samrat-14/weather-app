@@ -44,7 +44,7 @@
   content: '°F' !important;
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 900px) {
   .weather-panel {
     width: 100%;
     overflow-y: auto;

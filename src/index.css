@@ -16,6 +16,10 @@
   --font-color: #ffffff;
 }
 
+:root {
+  --media-breakpoint: 900px;
+}
+
 *,
 *::before,
 *::after {

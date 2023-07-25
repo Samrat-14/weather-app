@@ -1,10 +1,12 @@
 import React from 'react';
 import useIsMobile from '../../utils/useIsMobile.js';
+import { useSelector } from 'react-redux';
 
-import { sun, temperature, humidity, windspeed } from '../../assets/index.js';
+import { temperature, humidity, windspeed } from '../../assets/index.js';
 import './currentWeather.css';
 
-const CurrentWeather = ({ data }) => {
+const CurrentWeather = () => {
+  const data = useSelector((state) => state.searchData)?.currentWeatherData;
   const { isMobile } = useIsMobile();
 
   return (
