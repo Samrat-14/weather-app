@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 
 import './search.css';
 
-const Search = ({ tempUnit, favouriteToShow }) => {
+const Search = ({ tempUnit, favouriteToShow, isGps }) => {
   const [search, setSearch] = useState(null);
   const dispatch = useDispatch();
 
@@ -41,6 +41,15 @@ const Search = ({ tempUnit, favouriteToShow }) => {
   useEffect(() => {
     handleOnChange(favouriteToShow);
   }, [favouriteToShow]);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((pos) => {
+      handleOnChange({
+        value: `${pos.coords.latitude} ${pos.coords.longitude}`,
+        label: 'Your location',
+      });
+    });
+  }, [isGps]);
 
   return (
     <AsyncPaginate

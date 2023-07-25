@@ -10,6 +10,7 @@ import {
   appLogo,
   appLogoMobile,
   moon,
+  gps,
 } from '../../assets/index.js';
 import './weatherPanel.css';
 import AirQualityIndex from '../airQualityIndex/airQualityIndex';
@@ -27,7 +28,7 @@ const WeatherPanel = ({
   const searchResult = useSelector((state) => state.searchData);
 
   const { isMobile } = useIsMobile();
-
+  const [isGps, setIsGps] = useState(false);
   const [tempUnit, setTempUnit] = useState('metric');
 
   const handleFavourite = () => {
@@ -81,7 +82,21 @@ const WeatherPanel = ({
             <img src={appLogoMobile} alt="app-logo" height={40} width={40} />
           )}
         </div>
-        <Search tempUnit={tempUnit} favouriteToShow={favouriteToShow} />
+        <div className="search-wrapper flex-row align-center">
+          <Search
+            tempUnit={tempUnit}
+            favouriteToShow={favouriteToShow}
+            isGps={isGps}
+          />
+          <img
+            src={gps}
+            alt="current-gps"
+            height={30}
+            width={30}
+            className="cursor-pointer"
+            onClick={() => setIsGps((curr) => !curr)}
+          />
+        </div>
       </div>
 
       <div className="weather-panel__info">

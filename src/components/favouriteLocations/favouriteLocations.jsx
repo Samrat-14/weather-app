@@ -62,7 +62,9 @@ const FavouriteLocations = ({
                   <div className="fav-loc-place flex-row">
                     <img src={location} alt="location-icon" />
                     <p className="fav-loc-location">
-                      {place.city.split(',')[0]}
+                      {place.city.split(',').length >= 1
+                        ? place.city.split(',')[0]
+                        : place.city}
                     </p>
                   </div>
                   <p className="fav-loc-temp">{`${Math.round(

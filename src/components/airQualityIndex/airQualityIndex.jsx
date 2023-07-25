@@ -118,7 +118,9 @@ const AirQualityIndex = () => {
               <div className="aiq-place flex-row align-center">
                 <img src={location} alt="location-icon" />
                 <p className="aiq-location">
-                  {data.city.split(',').slice(0, 2).join(',')}
+                  {data.city.split(',').length >= 2
+                    ? data.city.split(',').slice(0, 2).join(',')
+                    : data.city}
                 </p>
               </div>
             </div>

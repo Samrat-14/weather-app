@@ -31,6 +31,11 @@
   width: 500px;
   height: 20px;
 }
+.search-wrapper {
+  width: 60%;
+  gap: 20px !important;
+  justify-content: flex-end;
+}
 .location-place {
   margin: 20px 100px 20px 10px;
 }
@@ -49,10 +54,13 @@
     width: 100%;
     overflow-y: auto;
   }
+  .location {
+    width: 100%;
+  }
   .location-place {
     font-size: 16px;
-    margin: 10px;
-    width: 70%;
+    margin: 10px 20px 10px 10px;
+    max-width: 70%;
   }
   .weather-panel__info {
     flex-direction: column-reverse;
@@ -60,5 +68,9 @@
     justify-content: space-around;
     align-items: flex-start;
     margin-top: 10px;
+  }
+  .search-wrapper {
+    width: 80%;
+    gap: 10px !important;
   }
 }
