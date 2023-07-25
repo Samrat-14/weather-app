@@ -8,6 +8,7 @@ import favouriteFilled from './favourite-filled.svg';
 import temperature from './temperature.svg';
 import appLogo from './app-logo.svg';
 import appLogoMobile from './app-logo.png';
+import gps from './gps.svg';
 
 export {
   humidity,
@@ -20,4 +21,5 @@ export {
   temperature,
   appLogo,
   appLogoMobile,
+  gps,
 };
