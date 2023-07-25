@@ -1,0 +1,41 @@
+.air-quality-index {
+  width: 69%;
+  height: 360px;
+  background-color: var(--tertiary-dark);
+  border-radius: 20px;
+  padding: 20px;
+}
+.aqi-data {
+  margin-left: 20px;
+}
+.air-quality-pollutants {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  height: 140px;
+  overflow-x: auto;
+}
+.aqi-box {
+  min-width: 95px;
+  height: 140px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.aqi-pollutants-name {
+  font-weight: 600;
+}
+.aqi-pollutants-unit {
+  font-size: 10px;
+}
+
+@media screen and (max-width: 640px) {
+  .air-quality-index {
+    width: 100%;
+  }
+  .aqi-data {
+    margin-left: 0;
+  }
+}

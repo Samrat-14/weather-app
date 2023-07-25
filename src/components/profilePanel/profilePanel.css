@@ -1,0 +1,40 @@
+.profile-panel {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 30%;
+  background-color: var(--primary-dark);
+}
+.profile-panel__auth {
+  height: 180px;
+  border-bottom: 2px solid var(--tertiary-dark);
+  padding: 0 0 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.profile-panel__auth-info {
+  justify-content: flex-end;
+  gap: 50px;
+}
+
+.mode-toggle + label::after {
+  background-image: url('../../assets/moon.svg');
+}
+.mode-toggle:checked + label::after {
+  background-image: url('../../assets/sun.svg');
+}
+
+@media screen and (max-width: 640px) {
+  .profile-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 80%;
+    display: none;
+  }
+  .show {
+    display: flex;
+  }
+}

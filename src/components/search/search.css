@@ -1,0 +1,15 @@
+.search-bar {
+  width: 60%;
+  border: none;
+  outline: none;
+  background-color: var(--secondary-dark);
+}
+.search-bar * {
+  color: #000;
+}
+
+@media screen and (max-width: 640px) {
+  .search-bar {
+    width: 80%;
+  }
+}
