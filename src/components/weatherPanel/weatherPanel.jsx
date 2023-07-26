@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Search from '../search/search';
-import { WEATHER_API_KEY, WEATHER_API_URL } from '../../api';
 import useIsMobile from '../../utils/useIsMobile';
 
 import {
@@ -17,15 +16,16 @@ import AirQualityIndex from '../airQualityIndex/airQualityIndex';
 import CurrentWeather from '../currentWeather/currentWeather';
 import Forecast from '../forecast/forecast';
 import { useSelector } from 'react-redux';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const WeatherPanel = ({
   favLocations,
   setFavLocations,
   favouriteToShow,
-  isAuth,
   setShowProfilePanel,
 }) => {
   const searchResult = useSelector((state) => state.searchData);
+  const { isAuthenticated, user } = useAuth0();
 
   const { isMobile } = useIsMobile();
   const [isGps, setIsGps] = useState(false);
@@ -39,24 +39,22 @@ const WeatherPanel = ({
     );
 
     if (!isFavourite) {
-      setFavLocations([
-        ...favLocations,
-        {
-          coord: {
-            lat: searchResult.currentWeatherData.coord.lat,
-            lon: searchResult.currentWeatherData.coord.lon,
-          },
-          city: searchResult.currentWeatherData.city,
-          weather: {
-            temp: {
-              value: searchResult.currentWeatherData.main.temp,
-              unit: tempUnit === 'metric' ? 'C' : 'F',
-            },
-            hum: searchResult.currentWeatherData.main.humidity,
-            wind: searchResult.currentWeatherData.wind.speed,
-          },
+      const newFav = {
+        coord: {
+          lat: searchResult.currentWeatherData.coord.lat,
+          lon: searchResult.currentWeatherData.coord.lon,
         },
-      ]);
+        city: searchResult.currentWeatherData.city,
+        weather: {
+          temp: {
+            value: searchResult.currentWeatherData.main.temp,
+            unit: tempUnit === 'metric' ? 'C' : 'F',
+          },
+          hum: searchResult.currentWeatherData.main.humidity,
+          wind: searchResult.currentWeatherData.wind.speed,
+        },
+      };
+      setFavLocations([...favLocations, newFav]);
     } else {
       const newFav = favLocations.filter(
         (location) =>
@@ -117,7 +115,7 @@ const WeatherPanel = ({
             <h4 className="location-place">
               {searchResult.currentWeatherData.city}
             </h4>
-            {isAuth &&
+            {isAuthenticated &&
               (favLocations.find(
                 (location) =>
                   location.coord.lat ===
