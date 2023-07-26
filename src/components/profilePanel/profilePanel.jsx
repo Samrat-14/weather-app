@@ -8,7 +8,6 @@ import './profilePanel.css';
 const ProfilePanel = ({
   favLocations,
   setFavouriteToShow,
-  setIsAuth,
   setShowProfilePanel,
   showProfilePanel,
 }) => {
@@ -19,10 +18,6 @@ const ProfilePanel = ({
   useEffect(() => {
     document.body.className = theme;
   }, [theme]);
-
-  useEffect(() => {
-    setIsAuth(isAuthenticated);
-  }, [isAuthenticated]);
 
   return (
     <div
